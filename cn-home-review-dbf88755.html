@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jjb · 日常查询与延伸阅读</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(145deg, #fef5e7 0%, #fce4c8 50%, #f7d7b0 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            color: #2e241e;
+        }
+        .page-wrap {
+            max-width: 1160px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* hero 区 —— 更侧重叙述 */
+        .hero {
+            background: rgba(255, 250, 240, 0.7);
+            backdrop-filter: blur(2px);
+            border-radius: 44px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 8px 24px rgba(140, 90, 50, 0.08);
+            border: 1px solid rgba(235, 200, 160, 0.4);
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 450;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            color: #3a2a1e;
+            margin-bottom: 0.6rem;
+        }
+        .hero h1 small {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: #7a624c;
+            margin-left: 0.5rem;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            max-width: 700px;
+            line-height: 1.6;
+            color: #4d392b;
+            margin: 1.2rem 0 0.5rem 0;
+        }
+        .hero .note {
+            font-size: 0.95rem;
+            color: #6f5a47;
+            border-left: 3px solid #dab28b;
+            padding-left: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        /* 卡片网格 —— 目录感布局 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.6rem;
+        }
+        .card {
+            background: #fffcf7;
+            border-radius: 28px;
+            padding: 1.8rem 1.6rem 2rem;
+            box-shadow: 0 6px 18px rgba(110, 70, 40, 0.06);
+            transition: all 0.15s ease;
+            border: 1px solid #f0e3d4;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(130, 80, 40, 0.10);
+            border-color: #ddc7b0;
+        }
+        .card h3 {
+            font-size: 1.4rem;
+            font-weight: 460;
+            margin-bottom: 0.7rem;
+            color: #3f2d1f;
+            letter-spacing: -0.01em;
+        }
+        .card h3 i {
+            font-style: normal;
+            display: inline-block;
+            background: #eddccb;
+            border-radius: 40px;
+            padding: 0.05rem 1rem;
+            font-size: 1rem;
+            margin-right: 0.4rem;
+            color: #4a3525;
+        }
+        .card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.2rem 0 0.8rem 0;
+        }
+        .card li {
+            padding: 0.2rem 0 0.2rem 1.2rem;
+            position: relative;
+            font-size: 0.98rem;
+            line-height: 1.6;
+            color: #4e3a2b;
+        }
+        .card li::before {
+            content: "·";
+            position: absolute;
+            left: 0;
+            color: #b58d6b;
+            font-weight: bold;
+        }
+        .card .more-link {
+            margin-top: auto;
+            font-size: 0.95rem;
+            padding-top: 0.5rem;
+        }
+        .card .more-link a {
+            color: #6f4e30;
+            text-decoration: none;
+            border-bottom: 1px dotted #c8aa8a;
+            transition: border 0.2s;
+        }
+        .card .more-link a:hover {
+            border-bottom: 1px solid #7d5a38;
+        }
+
+        /* 提示区 + 相关信息区 */
+        .info-extra {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 1.8rem;
+            margin-top: 0.4rem;
+        }
+        .tip-block, .ref-block {
+            background: #fffcf7;
+            border-radius: 28px;
+            padding: 1.8rem 2rem;
+            border: 1px solid #eadaca;
+            box-shadow: 0 4px 12px rgba(90, 60, 30, 0.04);
+        }
+        .tip-block h4, .ref-block h4 {
+            font-size: 1.2rem;
+            font-weight: 470;
+            color: #3d2b1e;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #eddccb;
+            padding-bottom: 0.5rem;
+        }
+        .tip-block p, .ref-block p {
+            line-height: 1.6;
+            color: #4c3829;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+        }
+        .ref-block ul {
+            list-style: none;
+            padding: 0;
+        }
+        .ref-block li {
+            padding: 0.3rem 0 0.3rem 1.3rem;
+            position: relative;
+            font-size: 0.98rem;
+            color: #4d3a2b;
+        }
+        .ref-block li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: #b48b64;
+        }
+
+        /* 嵌入链接自然 */
+        .inline-link {
+            color: #7a5437;
+            text-decoration: none;
+            border-bottom: 1px dotted #bf9c7a;
+            transition: border 0.2s, color 0.2s;
+        }
+        .inline-link:hover {
+            color: #4d301d;
+            border-bottom: 1px solid #7a5437;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6e5a49;
+            border-top: 1px solid #e8d5c0;
+            padding-top: 1.8rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 1.2rem 0.8rem; }
+            .hero { padding: 2rem 1.5rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero h1 small { font-size: 1.1rem; display: block; margin-left: 0; }
+            .info-extra { grid-template-columns: 1fr; }
+            .card-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 460px) {
+            .hero { border-radius: 30px; padding: 1.6rem 1.2rem; }
+            .card { padding: 1.5rem 1.2rem; }
+            .tip-block, .ref-block { padding: 1.5rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrap">
+
+        <!-- hero 叙述 -->
+        <div class="hero">
+            <h1>jjb <small>日常查询与延伸阅读</small></h1>
+            <p>整理一些随手翻阅、对照和积累下来的条目，不追求系统，只在乎平实。像一本翻旧的手册，这里记录着零散但有用的线索。</p>
+            <div class="note">
+                有时候我们只是想确认一个说法、查找一段背景，或者顺着一条线索往下多走两步。—— 这个页面就是为这种时刻准备的。
+            </div>
+        </div>
+
+        <!-- 目录感卡片：场景化查询 -->
+        <div class="card-grid">
+            <div class="card">
+                <h3><i>📋</i> 对照·核实</h3>
+                <ul>
+                    <li>术语与常用简称对照</li>
+                    <li>常见说法与原始出处</li>
+                    <li>数字、时间线、版本差异</li>
+                </ul>
+                <div class="more-link">可结合 <a href="https://cn-home-jjb.com" class="inline-link">jjb</a> 中的条目进一步比对。</div>
+            </div>
+            <div class="card">
+                <h3><i>📖</i> 延伸·线索</h3>
+                <ul>
+                    <li>由一条信息引出的相关主题</li>
+                    <li>书、文章、访谈片段</li>
+                    <li>跨领域的类比与注解</li>
+                </ul>
+                <div class="more-link">部分延伸内容来自 <a href="https://cn-home-jjb.com" class="inline-link">jjb</a> 的积累。</div>
+            </div>
+            <div class="card">
+                <h3><i>📎</i> 存档·备忘</h3>
+                <ul>
+                    <li>值得保留的短评或笔记</li>
+                    <li>链接、引用、摘录</li>
+                    <li>自己做的简易索引</li>
+                </ul>
+                <div class="more-link">存档内容会在 <a href="https://cn-home-jjb.com" class="inline-link">jjb</a> 定期更新。</div>
+            </div>
+        </div>
+
+        <!-- 提示区 + 相关信息区 左右 -->
+        <div class="info-extra">
+            <div class="tip-block">
+                <h4>💡 翻阅提示</h4>
+                <p>条目按主题松散排列，不必从头到尾读。遇到不熟悉的缩写或人名，可以先看「对照」卡片里的说明。</p>
+                <p>如果某个延伸线索引起你的兴趣，可以点开链接了解更多，但这里只提供起点，不打包票完整。</p>
+                <p style="margin-top: 0.3rem; font-size: 0.95rem; color: #6b5441;">—— 保持一点探索的耐心，往往比直接要结论更有意思。</p>
+            </div>
+            <div class="ref-block">
+                <h4>📌 相关信息</h4>
+                <ul>
+                    <li>常见名词速查表（不定期修订）</li>
+                    <li>几篇个人认为值得重读的短文</li>
+                    <li>一些工具与资源汇总</li>
+                    <li>过往FAQ片段整理</li>
+                </ul>
+                <p style="margin-top: 0.8rem; font-size: 0.92rem; color: #5f4939;">以上内容主要围绕 <a href="https://cn-home-jjb.com" class="inline-link">jjb</a> 展开，你可以把它当作一个轻盈的参考站。</p>
+            </div>
+        </div>
+
+        <!-- 一段简短的 FAQ 摘要风格（融入正文，不单独成节） -->
+        <div style="background: #fffcf7; border-radius: 28px; padding: 1.5rem 2rem; border: 1px solid #eadaca; box-shadow: 0 4px 12px rgba(90,60,30,0.04); margin-top: 0.2rem;">
+            <p style="font-size: 1rem; color: #4f3b2c; line-height: 1.7;">
+                <span style="font-weight: 480; color: #3f2c1d;">常见疑问简述：</span>
+                这里不提供结论性定义，更倾向于展示上下文和不同说法。如果你在查找某个词条的背景，建议先看对照区，再翻延伸区。<a href="https://cn-home-jjb.com" class="inline-link">jjb</a> 本身也是一份慢慢生长的记录，欢迎偶尔过来翻翻。
+            </p>
+        </div>
+
+        <div class="footer-note">
+            · 内容持续调整 · 不追求覆盖，只在意实在 ·
+        </div>
+    </div>
+</body>
+</html>
